@@ -1,0 +1,232 @@
+/* line 4, stdin */
+html {
+  font-size: 16px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  tap-highlight-color: transparent;
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow: auto; }
+
+/* line 14, stdin */
+* {
+  box-sizing: border-box; }
+
+/* line 18, stdin */
+.location:after, .school:after, .instructor:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+/* line 24, stdin */
+h1 {
+  font-size: 21px;
+  color: #555555; }
+
+/* Move this label up when the input fields have focus. */
+/* line 29, stdin */
+form {
+  display: block;
+  min-height: calc(100vh - 25px);
+  margin: 25px auto 0;
+  padding: 15px;
+  width: 100%; }
+  @media all and (min-width: 750px) {
+    /* line 29, stdin */
+    form {
+      width: 50%; } }
+
+/* line 39, stdin */
+.location, .school, .instructor {
+  margin-top: 25px; }
+
+/* line 43, stdin */
+.location, .school, .instructor {
+  -webkit-transition: .3s opacity;
+          transition: .3s opacity;
+  opacity: 1; }
+  /* line 46, stdin */
+  .location ul, .school ul, .instructor ul {
+    clear: both;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap; }
+    /* line 51, stdin */
+    .location ul:before, .school ul:before, .instructor ul:before {
+      text-decoration: underline;
+      display: block;
+      content: 'Select an Institution';
+      margin: 25px 0;
+      font-style: italic;
+      color: gray;
+      width: 100%; }
+    /* line 61, stdin */
+    .location ul#InstructorList:before, .school ul#InstructorList:before, .instructor ul#InstructorList:before {
+      content: 'Select an Instructor'; }
+    /* line 66, stdin */
+    .location ul#CityList:before, .school ul#CityList:before, .instructor ul#CityList:before {
+      content: 'Select a Town or City'; }
+    /* line 70, stdin */
+    .location ul li, .school ul li, .instructor ul li {
+      border: 1px solid #eee;
+      margin: 4px;
+      position: relative;
+      min-height: 40px;
+      width: 100%; }
+      /* line 71, stdin */
+      .location ul li.none, .school ul li.none, .instructor ul li.none {
+        border: none;
+        width: 100% !important; }
+      @media all and (min-width: 750px) {
+        /* line 70, stdin */
+        .location ul li, .school ul li, .instructor ul li {
+          width: calc(33.333% - 8px); } }
+      /* line 83, stdin */
+      .location ul li label, .location ul li input, .school ul li label, .school ul li input, .instructor ul li label, .instructor ul li input {
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0; }
+      /* line 90, stdin */
+      .location ul li input[type="radio"], .school ul li input[type="radio"], .instructor ul li input[type="radio"] {
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        z-index: 100; }
+      /* line 96, stdin */
+      .location ul li input[type="radio"]:checked + label, .school ul li input[type="radio"]:checked + label, .instructor ul li input[type="radio"]:checked + label {
+        background: lightyellow; }
+      /* line 99, stdin */
+      .location ul li label, .school ul li label, .instructor ul li label {
+        padding: 12px;
+        color: #000;
+        cursor: pointer;
+        -webkit-transform: none;
+                transform: none;
+        position: static; }
+
+/* line 109, stdin */
+.field {
+  border: 1px solid #d2d6d9;
+  padding: 0;
+  position: relative;
+  text-overflow: ellipsis;
+  min-height: 50px; }
+  /* line 115, stdin */
+  .field.city {
+    float: right;
+    width: calc(75% - 25px); }
+  /* line 119, stdin */
+  .field.state {
+    float: left;
+    width: 25%;
+    width: 100%;
+    padding-left: 0; }
+    /* line 124, stdin */
+    .field.state label {
+      left: 8px; }
+  /* line 128, stdin */
+  .field.school {
+    clear: both;
+    margin-top: 15px; }
+
+/* line 133, stdin */
+label {
+  background: white;
+  color: #777;
+  pointer-events: none;
+  position: absolute;
+  top: -8px;
+  left: 18px;
+  z-index: 70;
+  text-align: left;
+  padding: 0 6px;
+  margin: 0;
+  overflow: hidden;
+  -webkit-transform: translateY(25px);
+          transform: translateY(25px);
+  -webkit-transition: .3s all;
+          transition: .3s all; }
+  /* line 146, stdin */
+  label.stuck {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    color: #4e4e4e; }
+
+/* line 152, stdin */
+input, select {
+  background: white;
+  border: 0;
+  display: block;
+  font-size: 1rem;
+  box-shadow: none;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  height: 50px;
+  width: 100%; }
+  @media all and (min-width: 750px) {
+    /* line 152, stdin */
+    input, select {
+      font-size: 1.25rem; } }
+
+/* line 169, stdin */
+select {
+  -webkit-appearance: menulist-button;
+  background: transparent;
+  -webkit-appearance: none; }
+
+/* line 174, stdin */
+.hidden {
+  display: none !important; }
+
+/* line 177, stdin */
+.invisible {
+  opacity: 0 !important; }
+
+/* line 182, stdin */
+.spinner {
+  box-shadow: 0 0 5px #51cbee;
+  position: absolute;
+  top: 76px;
+  width: 50px;
+  height: 50px;
+  background-color: #028eda;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1.2s infinite ease-in-out;
+  animation: sk-scaleout 1.2s infinite ease-in-out;
+  z-index: 2;
+  /*
+  &#SchoolLoader {
+    left: 0;
+    top: 76px;
+    right: auto;
+  }
+*/ }
+
+@-webkit-keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0); }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 0; } }
+
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0); }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0; } }

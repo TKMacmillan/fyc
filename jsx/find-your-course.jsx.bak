@@ -1,0 +1,201 @@
+'use strict';
+
+class FindYourCourse extends React.Component {
+  constructor(props) {
+    this.state = {
+      abbr: '',
+      selectedInstitutionID: null,
+      institutions: [],
+      filteredInstitutions: [],
+      instructors: [],
+      filteredInstructors: [],
+      isCityFilled: false,
+      isStateFilled: false
+    }
+    this.handleCityInput = this.handleCityInput.bind(this);
+    this.handleStateInput = this.handleStateInput.bind(this);
+    this.handleInstitutionInput = this.handleInstitutionInput.bind(this);
+    this.handleInstructorInput = this.handleInstructorInput.bind(this);
+    this.handleInstitutionSelect = this.handleInstitutionSelect.bind(this);
+    this.handleInstructorSelect = this.handleInstructorSelect.bind(this);
+  }
+  handleInstructorSelect(e) {
+    this.refs.Instructor.value = e.currentTarget.value;
+  }
+  handleInstitutionSelect(e) {
+    this.refs.Institution.value = e.currentTarget.value;
+    this.setState({
+      selectedInstitutionID: parseInt(e.currentTarget.id.substring(1), 10)
+    });
+    this.refs.InstitutionList.className = 'hidden';
+    var fycComp = this;
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://cdn.dryrun.tk/instructors/'+this.state.abbr+'.js', true);
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        // Success!
+        var data = JSON.parse(request.responseText);
+        fycComp.refs.TeacherList.className = 'instructor';
+        fycComp.setState({
+          instructors: data
+        });
+      } else {
+      }
+    };
+    request.onerror = function() {
+    };
+    request.send();
+
+    // Show the instructor input field and focus on it.
+    this.refs.TeacherList.className = 'instructor';
+    this.refs.Instructor.focus();
+  }
+  handleStateInput(e) {
+    this.refs.StateLabel.className = (this.refs.State.value !== '')? 'stuck': '';
+    var locale = e.nativeEvent.target[e.nativeEvent.target.selectedIndex].value;
+    this.setState({
+      abbr: locale
+    });
+    var fycComp = this;
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://cdn.dryrun.tk/schools/' + locale + '.js', true);
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        var data = JSON.parse(request.responseText);
+        fycComp.refs.School.className = 'school';
+        fycComp.setState({
+          institutions: data
+        });
+      } else {
+        alert('Houston, we have a problem.');
+        // We reached our target server, but it returned an error
+      }
+    };
+    request.onerror = function() {
+      // There was a connection error of some sort
+    };
+    request.send();
+  }
+  handleCityInput(e) {
+    var cName = (this.refs.City.value !== '')? 'stuck': '';
+    this.refs.CityLabel.className = cName;
+  }
+  handleInstitutionInput(e) {
+    var cName = (this.refs.Institution.value !== '')? 'stuck': '';
+    this.refs.InstitutionLabel.className = cName;
+    var newArray = [];
+    if (cName === 'stuck' && this.refs.Institution.value.length > 2) {
+      var ri = new RegExp(e.nativeEvent.target.value, 'i');
+      this.refs.InstitutionList.className = '';
+      for (var i = 0; i < this.state.institutions.length; i++) {
+        if(ri.test(this.state.institutions[i][1])) {
+          newArray.push(this.state.institutions[i]);
+        }
+      }
+    }
+    else {
+      this.refs.InstitutionList.className = 'invisible';
+    }
+    this.setState({
+      filteredInstitutions: newArray
+    });
+    this.refs.TeacherList.className = 'invisible';
+  }
+  handleInstructorInput(e) {
+    var cName = (this.refs.Instructor.value !== '')? 'stuck': '';
+    this.refs.InstructorLabel.className = cName;
+    var newArray = [];
+    if (cName === 'stuck' && this.refs.Instructor.value.length > 2) {
+      var ri = new RegExp(e.nativeEvent.target.value, 'i');
+      this.refs.InstructorList.className = '';
+      for (var i = 0; i < this.state.instructors.length; i++) {
+        if(this.state.selectedInstitutionID === this.state.instructors[i][3] && ri.test(this.state.instructors[i][1])) {
+          newArray.push(this.state.instructors[i]);
+        }
+      }
+    }
+    else {
+      this.refs.InstructorList.className = 'invisible';
+    }
+    this.setState({
+      filteredInstructors: newArray
+    });
+  }
+  componentDidMount() {
+    this.refs.State.focus();
+  }
+  render() {
+    var states = 'AB AL AS CA DC GA IA IN LA MD MN MS NC NH NM NU OH OR PR SC TN VA WA WY AE AP AZ CO DE GU ID KS MA ME MO MT ND NJ NS NV OK PA QC SD TX VI WI YT AK AR BC CT FL HI IL KY MB MI MP NB NE NL NT NY ON PE RI SK UT VT WV'.split(' ');
+    var filteredData = [];
+    var stateOptions = [];
+    var cityLabelClass = (this.state.isCityFilled)? 'stuck': '';
+    var stateLabelClass = (this.state.isStateFilled)? 'stuck': '';
+    var noInstitutions = (this.state.filteredInstitutions.length > 0)? null: <li className="none">There are no results to display</li>;
+    var noInstructors = (this.state.filteredInstructors.length > 0)? null: <li className="none">There are no results to display</li>;
+    for (var i=0; i<states.length; i++) {
+      stateOptions.push(<option value={states[i]}>{states[i]}</option>);
+    }
+    return (
+      <form id="FindCourse">
+        <h1>Find Your Course</h1>
+        <div className="location">
+          <div className="field state">
+            <label for="States" ref="StateLabel">State</label>
+            <select id="States" ref="State" onChange={this.handleStateInput}>
+              <option disabled selected></option>
+              { stateOptions }
+            </select>
+          </div>
+          <div className="field city">
+            <label for="City" ref="CityLabel">Town or City</label>
+            <input type="text" id="City" ref="City" onChange={this.handleCityInput} />
+          </div>
+        </div>
+        <div className="school invisible" ref="School">
+          <div className="field">
+            <label for="Institution" ref="InstitutionLabel">Institution</label>
+            <input type="text" id="Institution" ref="Institution" onChange={this.handleInstitutionInput} />
+          </div>
+          <ul className="invisible" ref="InstitutionList">
+            {
+              this.state.filteredInstitutions.map(function(institution, index) {
+                var id = 'I' + institution[0];
+                return (
+                  <li className="">
+                    <input type="radio" id={id} name="school" value={institution[1]} onChange={this.handleInstitutionSelect} />
+                    <label for={id}>{institution[1]}</label>
+                  </li>
+                )
+              }, this)
+            }
+            { noInstitutions }
+          </ul>
+        </div>
+        <div className="instructor invisible" ref="TeacherList">
+          <div className="field">
+            <label for="Instructor" ref="InstructorLabel">Instructor</label>
+            <input type="text" id="Instructor" ref="Instructor" onChange={this.handleInstructorInput} />
+          </div>
+          <ul className="invisible" ref="InstructorList" id="InstructorList">
+            {
+              this.state.filteredInstructors.map(function(instructor, index) {
+                var id = 'T' + instructor[0];
+                return (
+                  <li className="">
+                    <input type="radio" id={id} name="teacher" value={instructor[1]} onChange={this.handleInstructorSelect} />
+                    <label for={id}>{instructor[1]}</label>
+                  </li>
+                )
+              }, this)
+            }
+            { noInstructors }
+          </ul>
+        </div>
+      </form>
+    );
+  }
+}
+
+setTimeout(function() {
+  ReactDOM.render(<FindYourCourse />, document.getElementById('FindYourCourse'));
+}, 500);

@@ -1,0 +1,53 @@
+{
+  "name": "dryrun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "entrypoint.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TKMacmillan/dryrun.git"
+  },
+  "author": "TKMacmillan",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1.33",
+    "bcrypt": "^0.8.5",
+    "bluebird": "^2.9.6",
+    "body-parser": "^1.14.2",
+    "co-busboy": "^1.3.0",
+    "express": "^4.13.3",
+    "express-http-proxy": "^0.6.0",
+    "handlebars": "^3.0.0",
+    "http-proxy": "^1.12.0",
+    "koa": "^0.18.0",
+    "koa-bodyparser": "^1.4.1",
+    "koa-generic-session": "^1.6.0",
+    "koa-gzip": "^0.1.0",
+    "koa-mount": "^1.3.0",
+    "koa-passport": "^1.1.4",
+    "koa-redis": "^1.0.0",
+    "koa-render": "^0.2.1",
+    "koa-router": "^4.2.0",
+    "koa-static": "^1.5.2",
+    "node-jsx": "^0.13.3",
+    "pg": "^4.2.0",
+    "react": "^0.13.3",
+    "redis": "^0.12.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-plumber": "^1.0.1",
+    "gulp-react": "^3.0.1",
+    "gulp-sass": "^2.1.1",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6",
+    "hashids": "^1.0.2",
+    "node-libs-browser": "^0.5.2",
+    "react-hot-loader": "^1.2.8",
+    "react-webcam": "0.0.4"
+  }
+}

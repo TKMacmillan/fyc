@@ -1,0 +1,6 @@
+
+# Elastic Beanstalk Files
+data/*
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
