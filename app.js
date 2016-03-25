@@ -1,5 +1,6 @@
 'use strict';
 
+// This is a comment.
 var app = require('koa')()
 , gzip = require('koa-gzip')
 , serve = require('koa-static')
