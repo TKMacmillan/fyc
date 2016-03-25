@@ -35,7 +35,7 @@ class FindYourCourse extends React.Component {
     this.refs.InstitutionList.className = 'hidden';
     var fycComp = this;
     var request = new XMLHttpRequest();
-    request.open('GET', 'http://d8b3y5yr7qfjx.cloudfront.net/instructors216/'+this.state.abbr+'.js', true);
+    request.open('GET', 'http://d8b3y5yr7qfjx.cloudfront.net/instructors224/'+this.state.abbr+'.js', true);
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         // Success!
@@ -88,7 +88,7 @@ class FindYourCourse extends React.Component {
       });
       var fycComp = this;
       var request = new XMLHttpRequest();
-      request.open('GET', 'http://d8b3y5yr7qfjx.cloudfront.net/schools216/' + locale + '.js', true);
+      request.open('GET', 'http://d8b3y5yr7qfjx.cloudfront.net/schools224/' + locale + '.js', true);
       request.onload = function() {
         if (request.status >= 200 && request.status < 400) {
           var data = JSON.parse(request.responseText);

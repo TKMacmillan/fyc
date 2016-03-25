@@ -6,6 +6,8 @@ var app = require('koa')()
 , views = require('koa-render')
 , bodyParser = require('koa-bodyparser')
 , Router = require('koa-router')
+, stsController = require('./controllers/Sts')
+, Sts = new stsController()
 , general = new Router();
 
 app.use(bodyParser());
@@ -19,6 +21,11 @@ app.use(views('./views', {
   map: { html: 'handlebars' },
   cache: false
 }));
+
+general.get('/register', function*(){
+  let token = yield *Sts.getBasicToken();
+  this.body = JSON.stringify(token);
+});
 
 general.get('/find-your-course', function*() {
   this.body = yield this.render('find-your-course');
